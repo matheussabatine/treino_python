@@ -2,7 +2,8 @@ import random
 
 print('*** Bem vindo ao ***\n*** Jo-Ken-Po Vs Máquina ***')
 
-jokenpo=[1,2,3]
+int_jokenpo=[1,2,3]
+jokenpo=['Pedra','Papel','Tesoura']
 '''
 legenda
 1 = pedra
@@ -18,22 +19,22 @@ txt_jogar_novamente='\n*** jogar novamente? ***\n1- sim\nOutro caractere- não\n
 txt_vitoria='\n Vencedor !'
 txt_derrota='\n Perdedor !'
 txt_empate='\n Empate !'
-game_over=False
 
+game_over=False
 
 while game_over==False:
 
     int_escolha_jogador=None
-    escolha_maquina=random.choice(jokenpo)
-    print('máquina escolheu: ',escolha_maquina)
+    escolha_maquina=random.choice(int_jokenpo)
+    
 
-    while int_escolha_jogador not in jokenpo:
+    while int_escolha_jogador not in int_jokenpo:
         escolha_jogador=input(txt_vez_do_jogador)
         try:
             int_escolha_jogador=int(escolha_jogador)
-            if int_escolha_jogador not in jokenpo:
+            if int_escolha_jogador not in int_jokenpo:
                 print(txt_escolha_invalida)
-        except ValueError:
+        except:
             print(txt_escolha_invalida)
       
     match int_escolha_jogador:
@@ -70,15 +71,17 @@ while game_over==False:
             else:
                 print(txt_derrota)
                 pontos_maquina+=1
-      
+
+    print('máquina escolheu: ',jokenpo[escolha_maquina-1])  
     txt_placar='\n*** PLACAR ({} - {}) ***'.format(pontos_jogador, pontos_maquina)
     print(txt_placar)
-    jogar_novamente=input(txt_jogar_novamente)
-    int_jogar_novamente=int(jogar_novamente)
+    try:
+        jogar_novamente=input(txt_jogar_novamente)
+        int_jogar_novamente=int(jogar_novamente)
 
-    if int_jogar_novamente!=1:
+        if int_jogar_novamente!=1:
+            game_over=True
+    except:
         game_over=True
-    else:
-        continue
 
 print("FIM DE JOGO")
