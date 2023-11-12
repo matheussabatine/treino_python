@@ -24,27 +24,27 @@ game_over=False
 
 while game_over==False:
 
-    int_escolha_jogador=None
+    escolha_jogador=None
     escolha_maquina=random.choice(int_jokenpo)
     
 
-    while int_escolha_jogador not in int_jokenpo:
-        escolha_jogador=input(txt_vez_do_jogador)
+    while escolha_jogador not in int_jokenpo:
+        
         try:
-            int_escolha_jogador=int(escolha_jogador)
-            if int_escolha_jogador not in int_jokenpo:
+            escolha_jogador=int(input(txt_vez_do_jogador))
+            if escolha_jogador not in int_jokenpo:
                 print(txt_escolha_invalida)
         except:
             print(txt_escolha_invalida)
       
-    match int_escolha_jogador:
+    match escolha_jogador:
         #PEDRA
         case 1:
             if escolha_maquina==3:
                 print(txt_vitoria)
                 pontos_jogador+=1
                
-            elif escolha_maquina==int_escolha_jogador:
+            elif escolha_maquina==escolha_jogador:
                 print(txt_empate)
             else:
                 print(txt_derrota)
@@ -55,7 +55,7 @@ while game_over==False:
                 print(txt_vitoria)
                 pontos_jogador+=1
                
-            elif escolha_maquina==int_escolha_jogador:
+            elif escolha_maquina==escolha_jogador:
                 print(txt_empate)
             else:
                 print(txt_derrota)
@@ -66,7 +66,7 @@ while game_over==False:
                 print(txt_vitoria)
                 pontos_jogador+=1
                
-            elif escolha_maquina==int_escolha_jogador:
+            elif escolha_maquina==escolha_jogador:
                 print(txt_empate)
             else:
                 print(txt_derrota)
@@ -76,10 +76,9 @@ while game_over==False:
     txt_placar='\n*** PLACAR ({} - {}) ***'.format(pontos_jogador, pontos_maquina)
     print(txt_placar)
     try:
-        jogar_novamente=input(txt_jogar_novamente)
-        int_jogar_novamente=int(jogar_novamente)
+        jogar_novamente=int(input(txt_jogar_novamente))
 
-        if int_jogar_novamente!=1:
+        if jogar_novamente!=1:
             game_over=True
     except:
         game_over=True
