@@ -1,2 +1,3 @@
 # PygameForBeginners
-n~s
+ESTE ROJETO NÃO ME PERTENCE
+ESTOU TREINANDO COM ELE
