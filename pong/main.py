@@ -9,7 +9,7 @@ pg.init()
 #colors
 red= (255, 0, 0)
 blue= (0, 0, 255)
-black= (0, 0, 0)
+grey= (107, 107, 107)
 white= (255, 255, 255)
 
 #screen
@@ -21,7 +21,7 @@ monitor_height= info.current_h
 #monitor full HD
 if monitor_width >= 1920 and monitor_height >= 1080:
     width = 1820
-    height = 980
+    height = 950
 #monitor 20 pol
 elif monitor_width >= 1600 and monitor_height >= 900:
     width = 1440
@@ -33,12 +33,12 @@ else:
 
 screen = pg.display.set_mode((width, height))
 
-running = True
-clock = pg.time.Clock()
-deltaTime = clock.tick(100) / 1000
+#creating a surface with screen's size
+background = pg.Surface(screen.get_size())
+background = background.convert()
+background.fill(grey)
 
-# players and ball creation and buttons
-
+# players and ball creation and playing buttons
 player_1= Player(0, screen)
 player_1_up=pg.K_w
 player_1_down=pg.K_s
@@ -48,9 +48,20 @@ player_2_up=pg.K_UP
 player_2_down=pg.K_DOWN
 
 ball= Ball(screen)
+# hit: 
+# 0 = ball didn't hit the bat
+# 1 = ball hitted the bat
+hit= 0
 
-hit= 1
+# Blit everything to the screen
+screen.blit(background, (0, 0))
+#render everything
+pg.display.flip()
 
+# clock and game running = True
+running = True
+clock = pg.time.Clock()
+deltaTime = clock.tick(100) / 1000
 
 while running:
     # poll for events
@@ -59,32 +70,36 @@ while running:
         if event.type == pg.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill(black)
-
-    #draw the players, and ball
-    pg.draw.rect(screen, blue, player_1.shape)
-    pg.draw.rect(screen, red, player_2.shape)
-    pg.draw.rect(screen, white, ball.shape)
-    
+    # fill parts of the screen with a color to wipe away anything from last frame
+    background.fill(grey, player_1.last_position)
+    background.fill(grey, player_2.last_position)
+    background.fill(grey, ball.last_position)
     # PHISICS
     #move the players
     player_1.player_move(deltaTime, player_1_up, player_1_down )
     player_2.player_move(deltaTime, player_2_up, player_2_down )
 
     #ball collision at players
-    ball_collision= pg.Rect.colliderect(ball.shape, player_1.shape) or pg.Rect.colliderect(ball.shape, player_2.shape)
-    if ball_collision== True and hit== 1:
+    ball_collision= pg.Rect.colliderect(ball.position, player_1.position) or pg.Rect.colliderect(ball.position, player_2.position)
+    if ball_collision== True and hit== 0:
             ball.ball_collider()
-            hit= 0
-    elif ball_collision== False and hit== 0:
-            hit= 1 
+            hit= 1
+    elif ball_collision== False and hit== 1:
+            hit= 0 
        
     ball.ball_move()
 
     # END OF PHISICS
+    
+    #redraw the players, and ball on the the surface 'background'
+    pg.draw.rect(background, blue, player_1.position)
+    pg.draw.rect(background, red, player_2.position)
+    pg.draw.rect(background, white, ball.position)
+
+    
 
     # update() the display to put your work on screen
+    screen.blit(background, (0, 0))
     pg.display.update()
 
     # FPS limiter
