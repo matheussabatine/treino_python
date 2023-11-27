@@ -1,7 +1,8 @@
 import pygame as pg
 import os
+import time
 from player import Player
-from ball import Ball
+from ball_file import Ball_class
 
 # pygame setup
 pg.init()
@@ -47,8 +48,8 @@ player_2= Player(screen.get_width() - player_1.width, screen)
 player_2_up=pg.K_UP
 player_2_down=pg.K_DOWN
 
-ball= Ball(screen)
-# hit(i use to this to avoid the ball glitching inside the bat,verification at: ball_collision): 
+ball= Ball_class(screen)
+# hit(i use this to avoid the ball glitching inside the bat,verification at: ball_collision): 
 # 0 = ball didn't hit the bat
 # 1 = ball hitted the bat
 hit= 0
@@ -63,6 +64,7 @@ running = True
 clock = pg.time.Clock()
 deltaTime = clock.tick(100) / 1000
 
+
 #game loop
 while running:
     # poll for events
@@ -75,31 +77,39 @@ while running:
     background.fill(grey, player_1.last_position)
     background.fill(grey, player_2.last_position)
     background.fill(grey, ball.last_position)
-    # PHISICS
+
+    if ball.position.left <= 0:
+        
+        ball.goal(player_2, player_1, player_2, screen)
+        del ball
+        ball= Ball_class(screen)
+     
+    elif ball.position.right >= screen.get_width():
+        
+        ball.goal(player_1, player_1, player_2, screen)
+        del ball
+        ball= Ball_class(screen)
+      
+# PHISICS
     #move the players
     player_1.player_move(deltaTime, player_1_up, player_1_down )
     player_2.player_move(deltaTime, player_2_up, player_2_down )
-    print(player_2.status)
-
+    
     #ball collision at players
-    ball_collision_player_1= pg.Rect.colliderect(ball.position, player_1.position)
-    ball_collision_player_2= pg.Rect.colliderect(ball.position, player_2.position)
-    if ball_collision_player_1== True and hit== 0:
-            ball.ball_collider(player_1.status)
+    ball_collision= pg.Rect.colliderect(ball.position, player_1.position) or pg.Rect.colliderect(ball.position, player_2.position)
+    
+    if ball_collision== True and hit== 0:
+            if ball.position.x < background.get_width()/2:
+                ball.ball_collider_left(player_1.status)
+            else:
+                ball.ball_collider_right(player_2.status) 
             hit= 1
-    elif ball_collision_player_1== False and hit== 1:
-            hit= 0
-
-    if ball_collision_player_2== True and hit== 0:
-            ball.ball_collider(player_2.status)
-            hit= 1
-    elif ball_collision_player_2== False and hit== 1:
-            hit= 0 
-       
+    elif ball_collision== False and hit== 1:
+            hit= 0  
     ball.ball_move()
     print(ball.vector)
 
-    # END OF PHISICS
+# END OF PHISICS
     
     #redraw the players, and ball on the the surface 'background'
     pg.draw.rect(background, blue, player_1.position)
