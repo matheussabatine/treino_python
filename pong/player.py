@@ -7,7 +7,6 @@ class Player():
         self.width= round(self.height/4)
         self.screen= screen 
         self.vel= 500
-        self.points= 0
         self.status= 'static'
        
         self.position= pg.Rect(xPosition, self.screen.get_height()/2, self.width, self.height)

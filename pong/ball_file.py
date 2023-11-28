@@ -1,6 +1,7 @@
 import pygame as pg
 #from main import player_1, player_2, screen
 import time
+import random
 
 class Ball_class():
     
@@ -11,7 +12,7 @@ class Ball_class():
         self.screen= screen
         self.position= pg.Rect(self.screen.get_width()/2, self.screen.get_height()/2, self.width, self.height)
         self.last_position= self.position
-        self.vel= 4
+        self.vel= random.choice([4, -4])
         self.max_vel= 28
         self.vector= pg.Vector2(self.vel, 0)
         self.angles= {min:30, max:-30}
@@ -52,17 +53,6 @@ class Ball_class():
         elif self.vector.x > self.max_vel*-1 and self.vector.x < 0:
             self.vector.x += -1
 
-    
-    def goal(self, point, player_1, player_2, screen):
-        white= (255, 255, 255)
-        point.points += 1
-        my_font = pg.font.Font('thirdparty\\fonts\\DS-DIGI.TTF', 100)
-        text_surface_left = my_font.render('{}'.format(player_1.points), False, white)
-        text_surface_right = my_font.render('{}'.format(player_2.points), False, white)
-        screen.blit(text_surface_left, (screen.get_width()*1/4, 5))
-        screen.blit(text_surface_right, (screen.get_width()*3/4, 5))
-        pg.display.update()
-        time.sleep(3)
 
 
     

@@ -12,6 +12,7 @@ red= (255, 0, 0)
 blue= (0, 0, 255)
 grey= (107, 107, 107)
 white= (255, 255, 255)
+black= (0, 0, 0)
 
 #screen
 pg.display.set_caption ("PONG")
@@ -37,16 +38,18 @@ screen = pg.display.set_mode((width, height))
 #creating a surface with screen's size
 background = pg.Surface(screen.get_size())
 background = background.convert()
-background.fill(grey)
+background.fill(black)
 
 # players and ball creation and playing buttons
 player_1= Player(0, screen)
 player_1_up=pg.K_w
 player_1_down=pg.K_s
+player_1_points= 0
 
 player_2= Player(screen.get_width() - player_1.width, screen)
 player_2_up=pg.K_UP
 player_2_down=pg.K_DOWN
+player_2_points= 0
 
 ball= Ball_class(screen)
 # hit(i use this to avoid the ball glitching inside the bat,verification at: ball_collision): 
@@ -64,6 +67,35 @@ running = True
 clock = pg.time.Clock()
 deltaTime = clock.tick(100) / 1000
 
+#Functions
+
+def ball_restart():
+     global ball
+     global player_1
+     global player_2
+     del ball
+     del player_1
+     del player_2
+     player_1= Player(0, screen)
+     player_2= Player(screen.get_width() - player_1.width, screen)
+     ball= Ball_class(screen)
+
+def goal(point):
+        global player_1_points
+        global player_2_points
+        global screen
+        white= (255, 255, 255)
+        if point == 'player1':
+            player_1_points+=1
+        else:
+            player_2_points+=1
+        my_font = pg.font.Font('thirdparty\\fonts\\DS-DIGI.TTF', 100)
+        text_surface_left = my_font.render('{}'.format(player_1_points), False, white)
+        text_surface_right = my_font.render('{}'.format(player_2_points), False, white)
+        screen.blit(text_surface_left, (screen.get_width()*1/4, 5))
+        screen.blit(text_surface_right, (screen.get_width()*3/4, 5))
+        pg.display.update()
+        time.sleep(3)
 
 #game loop
 while running:
@@ -74,22 +106,19 @@ while running:
             running = False
 
     # fill parts of the screen with a color to wipe away anything from last frame
-    background.fill(grey, player_1.last_position)
-    background.fill(grey, player_2.last_position)
-    background.fill(grey, ball.last_position)
+    background.fill(black, player_1.last_position)
+    background.fill(black, player_2.last_position)
+    background.fill(black, ball.last_position)
 
-    if ball.position.left <= 0:
-        
-        ball.goal(player_2, player_1, player_2, screen)
-        del ball
-        ball= Ball_class(screen)
+    #goal
+
+    if ball.position.left <= 0 or ball.position.right >= screen.get_width():
+        if ball.position.left <= 0:
+             goal('player2')
+        else:
+             goal('player1')
+        ball_restart()
      
-    elif ball.position.right >= screen.get_width():
-        
-        ball.goal(player_1, player_1, player_2, screen)
-        del ball
-        ball= Ball_class(screen)
-      
 # PHISICS
     #move the players
     player_1.player_move(deltaTime, player_1_up, player_1_down )
@@ -107,7 +136,6 @@ while running:
     elif ball_collision== False and hit== 1:
             hit= 0  
     ball.ball_move()
-    print(ball.vector)
 
 # END OF PHISICS
     
