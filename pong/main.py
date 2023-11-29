@@ -126,6 +126,7 @@ def main():
                 goal('player1')
                 
             if player_1_points == 10 or player_2_points == 10:
+                pg.quit()
                 main()
             ball_restart()
         
