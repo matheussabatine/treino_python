@@ -28,9 +28,6 @@ def main():
     elif monitor_width >= 1600 and monitor_height >= 900:
         width = 1440
         height = 800
-
-        width = 1200
-        height = 700
     #small monitor
     else:
         width = 1200
