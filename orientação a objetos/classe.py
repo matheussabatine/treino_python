@@ -16,3 +16,14 @@ class Carro:
     @staticmethod
     def ola():
         return print("bom dia companheiro")
+    
+
+class Pai:
+    def __init__(self, nome, idade):
+        self._nome= nome
+        self._idade= idade
+
+class Filho(Pai):
+    def __init__(self, nome, idade, escola):
+        super().__init__(nome, idade)
+        self._escola= escola
