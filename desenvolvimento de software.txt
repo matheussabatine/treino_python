@@ -1,0 +1,36 @@
+---regras essenciais
+-criar código que funciona, ou seja, ele deve cumprir sua função e ser confiável(sem falhas e bugs)
+-seguir padrão da linguagem escolhida, exemplo, em python, todos os imports devem ser feitos no começo do script
+-trabalhar com versionamento, o objetivo principal de versões é ter um registro de quando e quais mudanças foram feitas e por quem
+-validação de código, ou seja, checar e testar o script
+- divisão de funções em tamanhos razoáveis, ou seja, quanto menores elas forem, mais fácil é de escrever e debugar
+-documentar enquanto desenvolve, quando o propósito da função for concluído, documente
+complementos
+---design basico de software
+- variáveis globais, funções que modificam variáveis globais tem efeitos colaterais em todo o script, por isso devem ser usadas somente quando for nescessário, por exemplo uma informação que é utilizada em quase todas as funções do software, dar um nome bem distinto e documenta-la corretamente
+- coisas desnecessárias, criar o programa da maneira mais simples possível para resolver o problema, mas considere o que será nescessário no futuro
+- não otimize no estágio inicial, não se preucupe com otimização até que o script funcione, mas evite fazer escolhas que nunca serão rápidas o suficiente
+-dont reapet yoursel(não se repita) evite copiar e colar código várias vezes com poucas mudanças
+---planejamento de código
+- antes de começar a digitar, planeje como desenvolver o script
+- Unified Modeling Language (UML)
+- qual será o fluxo de dados?
+- partes dependentes de outros script?
+- onde é nescessário input do usuário?
+- partes mais importantes para validação e otimização do sistema?
+-partes onde é nescessário pesquisar? frameworks desconhecidos?
+-conexão entre scripts
+--- padronização
+- language standards ISO(aprofundar ISO do python)
++ heisenbugs: bugs que não são fáceis de se reproduzir, acontecem de 1 em 1000 vezes
+---seleção de algorítimos
+- é melhor trabalhar com uma técnica conhecida, mesmo que ela exija mais processamento computacional
+--- quando não desenvolver o software
+- ferramenta já existe e faz suas tarefas suficientemente bem
+- quando código que existe já existe já resolve seu problema, exceto se ele é pago e você não deseja pagar por ele, quase resolve seu problema e você não consegue modifica-lo para ser perfeito, é proprietário e não licenciado para uso
+- o esforço não vale a recompensa
+- falta de experiência, ás vezes  é melhor adaptar sua solução para outras ferramentas, pois você pode cometer erros sem saber
+---bibliotecas
+- são ótimas para não recriar algo que já foi criado, mas é bom evitá-las para funções simples, pois tudo que utiliza bibliotecas é dependente delas para seu funcionamento
+
+pdf 8
